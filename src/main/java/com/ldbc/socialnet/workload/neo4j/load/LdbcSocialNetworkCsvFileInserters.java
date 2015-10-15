@@ -21,7 +21,7 @@ public class LdbcSocialNetworkCsvFileInserters
     private static final Logger logger = Logger.getLogger( LdbcSocialNetworkCsvFileInserters.class );
 
     private final static Map<String, Object> EMPTY_MAP = new HashMap<String, Object>();
-    private final static String DATE_TIME_FORMAT_STRING = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    private final static String DATE_TIME_FORMAT_STRING = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     private final static SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat( DATE_TIME_FORMAT_STRING );
     private final static String DATE_FORMAT_STRING = "yyyy-MM-dd";
     private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat( DATE_FORMAT_STRING );
