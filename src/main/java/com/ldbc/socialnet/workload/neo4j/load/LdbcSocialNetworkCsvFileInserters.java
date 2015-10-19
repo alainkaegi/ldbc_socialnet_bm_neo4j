@@ -361,7 +361,7 @@ public class LdbcSocialNetworkCsvFileInserters
                 Map<String, Object> properties = new HashMap<String, Object>();
                 long id = Long.parseLong( (String) columnValues[0] );
                 // TODO remove?
-                // properties.put( Domain.Comment.ID, id );
+                properties.put( Domain.Comment.ID, id );
                 String creationDateString = (String) columnValues[1];
                 try
                 {
@@ -400,7 +400,7 @@ public class LdbcSocialNetworkCsvFileInserters
                 Map<String, Object> properties = new HashMap<String, Object>();
                 long id = Long.parseLong( (String) columnValues[0] );
                 // TODO remove?
-                // properties.put( "id", id );
+                properties.put( Domain.Post.ID, id );
                 properties.put( Domain.Post.IMAGE_FILE, columnValues[1] );
                 String creationDateString = (String) columnValues[2];
                 try
@@ -494,7 +494,7 @@ public class LdbcSocialNetworkCsvFileInserters
                 Map<String, Object> properties = new HashMap<String, Object>();
                 long id = Long.parseLong( (String) columnValues[0] );
                 // TODO remove?
-                // properties.put( "id", id );
+                properties.put( Domain.Forum.ID, id );
                 properties.put( Domain.Forum.TITLE, columnValues[1] );
                 String creationDateString = (String) columnValues[2];
                 try
@@ -530,7 +530,7 @@ public class LdbcSocialNetworkCsvFileInserters
                 Map<String, Object> properties = new HashMap<String, Object>();
                 long id = Long.parseLong( (String) columnValues[0] );
                 // TODO remove?
-                // properties.put( "id", id );
+                properties.put( Domain.Tag.ID, id );
                 properties.put( Domain.Tag.NAME, columnValues[1] );
                 properties.put( Domain.Tag.URL, columnValues[2] );
                 long tagNodeId = batchInserter.createNode( properties, Domain.Node.TAG );
@@ -554,7 +554,7 @@ public class LdbcSocialNetworkCsvFileInserters
                 Map<String, Object> properties = new HashMap<String, Object>();
                 long id = Long.parseLong( (String) columnValues[0] );
                 // TODO remove?
-                // properties.put( "id", id );
+                properties.put( Domain.TagClass.ID, id );
                 properties.put( Domain.TagClass.NAME, columnValues[1] );
                 properties.put( Domain.TagClass.URL, columnValues[2] );
                 long tagClassNodeId = batchInserter.createNode( properties, Domain.Node.TAG_CLASS );
@@ -578,7 +578,7 @@ public class LdbcSocialNetworkCsvFileInserters
                 Map<String, Object> properties = new HashMap<String, Object>();
                 long id = Long.parseLong( (String) columnValues[0] );
                 // TODO remove?
-                // properties.put( "id", id );
+                properties.put( Domain.Organisation.ID, id );
                 properties.put( Domain.Organisation.NAME, columnValues[2] );
                 // TODO only necessary if connecting to dbpedia
                 // properties.put( "url", columnValues[3] );
@@ -604,7 +604,7 @@ public class LdbcSocialNetworkCsvFileInserters
                 Map<String, Object> properties = new HashMap<String, Object>();
                 long id = Long.parseLong( (String) columnValues[0] );
                 // TODO remove?
-                // properties.put( "id", id );
+                properties.put( Domain.Place.ID, id );
                 properties.put( Domain.Place.NAME, columnValues[1] );
                 properties.put( Domain.Place.URL, columnValues[2] );
                 Domain.Place.Type placeType = Domain.Place.Type.valueOf( ( (String) columnValues[3] ).toUpperCase() );

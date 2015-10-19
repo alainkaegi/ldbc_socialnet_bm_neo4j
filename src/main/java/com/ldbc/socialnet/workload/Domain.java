@@ -76,6 +76,7 @@ public class Domain
 
     public static class Comment
     {
+        public static final String ID = "id";
         public static final String CREATION_DATE = "creationDate";
         public static final String LOCATION_IP = "locationIP";
         public static final String BROWSER_USED = "browserUsed";
@@ -84,6 +85,7 @@ public class Domain
 
     public static class Post
     {
+        public static final String ID = "id";
         public static final String IMAGE_FILE = "imageFile";
         public static final String CREATION_DATE = "creationDate";
         public static final String LOCATION_IP = "locationIP";
@@ -108,18 +110,21 @@ public class Domain
 
     public static class Forum
     {
+        public static final String ID = "id";
         public static final String TITLE = "title";
         public static final String CREATION_DATE = "creationDate";
     }
 
     public static class Tag
     {
+        public static final String ID = "id";
         public static final String NAME = "name";
         public static final String URL = "url";
     }
 
     public static class TagClass
     {
+        public static final String ID = "id";
         public static final String NAME = "name";
         public static final String URL = "url";
     }
@@ -132,6 +137,7 @@ public class Domain
             COMPANY
         }
 
+        public static final String ID = "id";
         public static final String NAME = "name";
     }
 
@@ -144,6 +150,7 @@ public class Domain
             CONTINENT
         }
 
+        public static final String ID = "id";
         public static final String NAME = "name";
         public static final String URL = "url";
     }
