@@ -45,6 +45,7 @@ public class LdbcSocialNetworkCsvFileInserters
     private final CsvFileInserter tagClassesInserter;
     private final CsvFileInserter tagsInserter;
     private final CsvFileInserter commentHasCreatorPersonInserter;
+    private final CsvFileInserter commentHasTagTagInserter;
     private final CsvFileInserter commentIsLocatedInPlaceInserter;
     private final CsvFileInserter commentReplyOfCommentInserter;
     private final CsvFileInserter commentReplyOfPostInserter;
@@ -56,6 +57,7 @@ public class LdbcSocialNetworkCsvFileInserters
     private final CsvFileInserter personHasInterestTagInserter;
     private final CsvFileInserter personIsLocatedInPlaceInserter;
     private final CsvFileInserter personKnowsPersonInserter;
+    private final CsvFileInserter personLikesCommentInserter;
     private final CsvFileInserter personLikesPostInserter;
     private final CsvFileInserter personSpeaksLanguageInserter;
     private final CsvFileInserter personStudyAtOrganisationInserter;
@@ -106,6 +108,7 @@ public class LdbcSocialNetworkCsvFileInserters
          */
         this.commentHasCreatorPersonInserter = commentHasCreatorPerson( csvDataDir, batchInserter, personsIndex,
                 commentsIndex );
+        this.commentHasTagTagInserter = commentHasTagTag( csvDataDir, batchInserter, commentsIndex, tagsIndex );
         this.commentIsLocatedInPlaceInserter = commentIsLocatedInPlace( csvDataDir, batchInserter, commentsIndex,
                 placesIndex );
         this.commentReplyOfCommentInserter = commentReplyOfComment( csvDataDir, batchInserter, commentsIndex );
@@ -119,6 +122,7 @@ public class LdbcSocialNetworkCsvFileInserters
         this.personIsLocatedInPlaceInserter = personIsLocatedInPlace( csvDataDir, batchInserter, personsIndex,
                 placesIndex );
         this.personKnowsPersonInserter = personKnowsPerson( csvDataDir, batchInserter, personsIndex );
+        this.personLikesCommentInserter = personLikesComment( csvDataDir, batchInserter, personsIndex, commentsIndex );
         this.personLikesPostInserter = personLikesPost( csvDataDir, batchInserter, personsIndex, postsIndex );
         this.personStudyAtOrganisationInserter = personStudyAtOrganisation( csvDataDir, batchInserter, personsIndex,
                 organisationsIndex );
@@ -222,6 +226,11 @@ public class LdbcSocialNetworkCsvFileInserters
         return commentHasCreatorPersonInserter;
     }
 
+    public CsvFileInserter getCommentHasTagTagInserter()
+    {
+        return commentHasTagTagInserter;
+    }
+
     public CsvFileInserter getCommentIsLocatedInPlaceInserter()
     {
         return commentIsLocatedInPlaceInserter;
@@ -275,6 +284,11 @@ public class LdbcSocialNetworkCsvFileInserters
     public CsvFileInserter getPersonKnowsPersonInserter()
     {
         return personKnowsPersonInserter;
+    }
+
+    public CsvFileInserter getPersonLikesCommentInserter()
+    {
+        return personLikesCommentInserter;
     }
 
     public CsvFileInserter getPersonLikesPostInserter()
@@ -813,6 +827,32 @@ public class LdbcSocialNetworkCsvFileInserters
         } );
     }
 
+    private static CsvFileInserter commentHasTagTag( final String csvDataDir, final BatchInserter batchInserter,
+            final CommentsTempIndex commentsIndex, final TagsTempIndex tagsIndex ) throws FileNotFoundException
+    {
+        /*
+        Comment.id  Tag.id
+        00          259
+         */
+        return new CsvFileInserter( new File( csvDataDir + CsvFiles.COMMENT_HAS_TAG_TAG ), new CsvLineInserter()
+        {
+            @Override
+            public Object[] transform( Object[] columnValues )
+            {
+                long commentNodeId = commentsIndex.get( Long.parseLong( (String) columnValues[0] ) );
+                long tagNodeId = tagsIndex.get( Long.parseLong( (String) columnValues[1] ) );
+                return new Object[] { commentNodeId, tagNodeId };
+            }
+
+            @Override
+            public void insert( Object[] columnValues )
+            {
+                batchInserter.createRelationship( (Long) columnValues[0], (Long) columnValues[1], Domain.Rel.HAS_TAG,
+                        EMPTY_MAP );
+            }
+        } );
+    }
+
     private static CsvFileInserter postHasCreatorPerson( final String csvDataDir, final BatchInserter batchInserter,
             final PersonsTempIndex personsIndex, final PostsTempIndex postsIndex ) throws FileNotFoundException
     {
@@ -996,6 +1036,47 @@ public class LdbcSocialNetworkCsvFileInserters
             {
                 batchInserter.createRelationship( (Long) columnValues[0], (Long) columnValues[1], Domain.Rel.HAS_TAG,
                         EMPTY_MAP );
+            }
+        } );
+    }
+
+    private static CsvFileInserter personLikesComment( final String csvDataDir, final BatchInserter batchInserter,
+            final PersonsTempIndex personsIndex, final CommentsTempIndex commentsIndex ) throws FileNotFoundException
+    {
+        /*
+        Person.id   Comment.id  creationDate
+        1489        00          2011-01-20T11:18:41Z
+         */
+        return new CsvFileInserter( new File( csvDataDir + CsvFiles.PERSON_LIKES_COMMENT ), new CsvLineInserter()
+        {
+            @Override
+            public Object[] transform( Object[] columnValues )
+            {
+                long fromPersonNodeId = personsIndex.get( Long.parseLong( (String) columnValues[0] ) );
+                long toCommentNodeId = commentsIndex.get( Long.parseLong( (String) columnValues[1] ) );
+                String creationDateString = (String) columnValues[2];
+                long creationDateAsTime;
+                try
+                {
+                    creationDateAsTime = DATE_TIME_FORMAT.parse( creationDateString ).getTime();
+                }
+                catch ( ParseException e )
+                {
+                    long now = System.currentTimeMillis();
+                    creationDateAsTime = now;
+                    logger.error( String.format( "Invalid DateTime string: %s\nSet creationDate to now instead\n%s",
+                            creationDateString, e ) );
+                }
+                return new Object[] { fromPersonNodeId, toCommentNodeId, creationDateAsTime };
+            }
+
+            @Override
+            public void insert( Object[] columnValues )
+            {
+                Map<String, Object> properties = new HashMap<String, Object>();
+                properties.put( Domain.Likes.CREATION_DATE, columnValues[2] );
+                batchInserter.createRelationship( (Long) columnValues[0], (Long) columnValues[1], Domain.Rel.LIKES,
+                        properties );
             }
         } );
     }

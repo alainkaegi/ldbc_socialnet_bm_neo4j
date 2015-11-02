@@ -88,15 +88,20 @@ public class LdbcSocialNeworkNeo4jImporter
         insertFile( fileInserters.getCommentReplyOfCommentInserter() );
         // Relationship (Comment, Post)
         insertFile( fileInserters.getCommentReplyOfPostInserter() );
-
-        // Free (Comment)
-        logger.info( "Freeing comments index" );
-        fileInserters.getCommentsIndex().shutdown();
+        // Relationship (Person, Comment)
+        insertFile( fileInserters.getPersonLikesCommentInserter() );
 
         // Node (Forum)
         insertFile( fileInserters.getForumsInserter() );
         // Node (Tag)
         insertFile( fileInserters.getTagsInserter() );
+
+        // Relationship (Comment, Tag)
+        insertFile( fileInserters.getCommentHasTagTagInserter() );
+
+        // Free (Comment)
+        logger.info( "Freeing comments index" );
+        fileInserters.getCommentsIndex().shutdown();
 
         // Relationship (Forum, Post)
         insertFile( fileInserters.getForumContainerOfPostInserter() );

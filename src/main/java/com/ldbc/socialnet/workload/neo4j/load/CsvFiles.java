@@ -31,6 +31,7 @@ public class CsvFiles
     public static final String COMMENT_REPLY_OF_COMMENT = "comment_replyOf_comment.csv";
     public static final String COMMENT_REPLY_OF_POST = "comment_replyOf_post.csv";
     public static final String COMMENT_LOCATED_IN_PLACE = "comment_isLocatedIn_place.csv";
+    public static final String COMMENT_HAS_TAG_TAG = "comment_hasTag_tag.csv";
     public static final String PLACE_IS_PART_OF_PLACE = "place_isPartOf_place.csv";
     public static final String PERSON_KNOWS_PERSON = "person_knows_person.csv";
     public static final String PERSON_STUDIES_AT_ORGANISATION = "person_studyAt_organisation.csv";
@@ -42,6 +43,7 @@ public class CsvFiles
     public static final String PERSON_HAS_INTEREST_TAG = "person_hasInterest_tag.csv";
     public static final String POST_HAS_TAG_TAG = "post_hasTag_tag.csv";
     public static final String PERSON_LIKES_POST = "person_likes_post.csv";
+    public static final String PERSON_LIKES_COMMENT = "person_likes_comment.csv";
     public static final String POST_IS_LOCATED_IN_PLACE = "post_isLocatedIn_place.csv";
     public static final String FORUM_HAS_MEMBER_PERSON = "forum_hasMember_person.csv";
     public static final String FORUMS_CONTAINER_OF_POST = "forum_containerOf_post.csv";
@@ -69,6 +71,7 @@ public class CsvFiles
 
         // files.add( csvDataDir + "comment.csv" );
         // files.add( csvDataDir + "comment_hasCreator_person.csv" );
+        // files.add( csvDataDir + "comment_hasTag_tag.csv" );
         // files.add( csvDataDir + "comment_isLocatedIn_location.csv" );
         // files.add( csvDataDir + "comment_replyOf_comment.csv" );
         // files.add( csvDataDir + "comment_replyOf_post.csv" );
@@ -86,6 +89,7 @@ public class CsvFiles
         // files.add( csvDataDir + "person_hasInterest_tag.csv" );
         // files.add( csvDataDir + "person_isLocatedIn_location.csv" );
         // files.add( csvDataDir + "person_knows_person.csv" );
+        // files.add( csvDataDir + "person_likes_comment.csv" );
         // files.add( csvDataDir + "person_likes_post.csv" );
         // files.add( csvDataDir + "person_speaks_language.csv" );
         // files.add( csvDataDir + "person_studyAt_organisation.csv" );
