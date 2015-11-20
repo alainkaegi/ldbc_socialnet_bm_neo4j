@@ -379,6 +379,8 @@ public class LdbcSocialNetworkCsvFileInserters
                 properties.put( Domain.Comment.LOCATION_IP, columnValues[2] );
                 properties.put( Domain.Comment.BROWSER_USED, columnValues[3] );
                 properties.put( Domain.Comment.CONTENT, columnValues[4] );
+                int length = Integer.parseInt( (String) columnValues[5] );
+                properties.put( Domain.Comment.LENGTH, length );
                 long commentNodeId = batchInserter.createNode( properties, Domain.Node.COMMENT );
                 commentsIndex.put( id, commentNodeId );
             }
@@ -420,6 +422,8 @@ public class LdbcSocialNetworkCsvFileInserters
                 properties.put( Domain.Post.BROWSER_USED, columnValues[4] );
                 properties.put( Domain.Post.LANGUAGE, columnValues[5] );
                 properties.put( Domain.Post.CONTENT, columnValues[6] );
+                int length = Integer.parseInt( (String) columnValues[7] );
+                properties.put( Domain.Post.LENGTH, length );
                 long postNodeId = batchInserter.createNode( properties, Domain.Node.POST );
                 postsIndex.put( id, postNodeId );
             }
@@ -581,7 +585,7 @@ public class LdbcSocialNetworkCsvFileInserters
                 properties.put( Domain.Organisation.ID, id );
                 properties.put( Domain.Organisation.NAME, columnValues[2] );
                 // TODO only necessary if connecting to dbpedia
-                // properties.put( "url", columnValues[3] );
+                properties.put( Domain.Organisation.URL, columnValues[3] );
                 long organisationNodeId = batchInserter.createNode( properties, Domain.Node.ORGANISATION,
                         Domain.Organisation.Type.valueOf( ( (String) columnValues[1] ).toUpperCase() ) );
                 organisationsIndex.put( id, organisationNodeId );

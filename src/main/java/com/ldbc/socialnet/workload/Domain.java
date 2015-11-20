@@ -81,6 +81,7 @@ public class Domain
         public static final String LOCATION_IP = "locationIP";
         public static final String BROWSER_USED = "browserUsed";
         public static final String CONTENT = "content";
+        public static final String LENGTH = "length";
     }
 
     public static class Post
@@ -92,6 +93,7 @@ public class Domain
         public static final String BROWSER_USED = "browserUsed";
         public static final String LANGUAGE = "language";
         public static final String CONTENT = "content";
+        public static final String LENGTH = "length";
     }
 
     public static class Person
@@ -139,6 +141,7 @@ public class Domain
 
         public static final String ID = "id";
         public static final String NAME = "name";
+        public static final String URL = "url";
     }
 
     public static class Place
