@@ -15,13 +15,20 @@ public class Domain
     public static Iterable<Pair<Label, String>> labelPropertyPairsToIndex()
     {
         List<Pair<Label, String>> labelPropertyPairsToIndex = new ArrayList<Pair<Label, String>>();
+        labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.TAG, Tag.ID ) );
         labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.TAG, Tag.NAME ) );
+        labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.TAG_CLASS, TagClass.NAME ) );
         labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.PERSON, Person.ID ) );
         labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.PERSON, Person.FIRST_NAME ) );
         labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.PERSON, Person.LAST_NAME ) );
+        labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.PLACE, Place.ID ) );
         labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.PLACE, Place.NAME ) );
         labelPropertyPairsToIndex.add( new Pair<Label, String>( Place.Type.CITY, Place.NAME ) );
         labelPropertyPairsToIndex.add( new Pair<Label, String>( Place.Type.COUNTRY, Place.NAME ) );
+        labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.POST, Post.ID ) );
+        labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.COMMENT, Comment.ID ) );
+        labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.FORUM, Forum.ID ) );
+        labelPropertyPairsToIndex.add( new Pair<Label, String>( Node.ORGANISATION, Organisation.ID ) );
         return labelPropertyPairsToIndex;
     }
 
