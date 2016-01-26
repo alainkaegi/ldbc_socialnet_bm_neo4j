@@ -172,6 +172,11 @@ public class Domain
         public static final String WORK_FROM = "workFrom";
     }
 
+    public static class Knows
+    {
+        public static final String CREATION_DATE = "creationDate";
+    }
+
     public static class Likes
     {
         public static final String CREATION_DATE = "creationDate";

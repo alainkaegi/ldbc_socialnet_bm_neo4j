@@ -736,14 +736,29 @@ public class LdbcSocialNetworkCsvFileInserters
             {
                 long fromPersonNodeId = personsIndex.get( Long.parseLong( (String) columnValues[0] ) );
                 long toPersonNodeId = personsIndex.get( Long.parseLong( (String) columnValues[1] ) );
-                return new Object[] { fromPersonNodeId, toPersonNodeId };
+                String creationDateString = (String) columnValues[2];
+                long creationDateAsTime;
+                try
+                {
+                    creationDateAsTime = DATE_TIME_FORMAT.parse( creationDateString ).getTime();
+                }
+                catch ( ParseException e )
+                {
+                    long now = System.currentTimeMillis();
+                    creationDateAsTime = now;
+                    logger.error( String.format( "Invalid DateTime string: %s\nSet creationDate to now instead\n%s",
+                            creationDateString, e ) );
+                }
+                return new Object[] { fromPersonNodeId, toPersonNodeId, creationDateAsTime };
             }
 
             @Override
             public void insert( Object[] columnValues )
             {
+                Map<String, Object> properties = new HashMap<String, Object>();
+                properties.put( Domain.Knows.CREATION_DATE, columnValues[2] );
                 batchInserter.createRelationship( (Long) columnValues[0], (Long) columnValues[1], Domain.Rel.KNOWS,
-                        EMPTY_MAP );
+                        properties );
             }
         } );
     }
