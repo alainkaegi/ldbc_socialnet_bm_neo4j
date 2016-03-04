@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -132,6 +133,8 @@ public class LdbcSocialNetworkCsvFileInserters
         this.tagHasTypeTagClassInserter = tagHasTypeTagClass( csvDataDir, batchInserter, tagsIndex, tagClassesIndex );
         this.organisationBasedNearPlaceInserter = organisationBasedNearPlace( csvDataDir, batchInserter,
                 organisationsIndex, placesIndex );
+
+        DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     public CommentsTempIndex getCommentsIndex()
