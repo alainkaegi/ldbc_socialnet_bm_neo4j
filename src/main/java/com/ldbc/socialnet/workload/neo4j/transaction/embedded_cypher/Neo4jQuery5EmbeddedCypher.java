@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.neo4j.cypher.javacompat.ExecutionEngine;
+import org.neo4j.cypher.internal.javacompat.ExecutionEngine;
 import org.neo4j.graphdb.GraphDatabaseService;
 
 import com.ldbc.driver.util.Function2;
@@ -31,8 +31,8 @@ public class Neo4jQuery5EmbeddedCypher implements Neo4jQuery5
     public Iterator<LdbcQuery5Result> execute( GraphDatabaseService db, ExecutionEngine engine, LdbcQuery5 params )
     {
         Map<String, Object> cypherParams = buildParams( params.personId(), params.joinDate() );
-        Map<String, LdbcQuery5Result> postsMap = buildPostsMap( engine.execute( queryPosts(), cypherParams ).iterator() );
-        Map<String, LdbcQuery5Result> commentsMap = buildCommentsMap( engine.execute( queryComments(), cypherParams ).iterator() );
+        Map<String, LdbcQuery5Result> postsMap = buildPostsMap( db.execute( queryPosts(), cypherParams ) );
+        Map<String, LdbcQuery5Result> commentsMap = buildCommentsMap( db.execute( queryComments(), cypherParams ) );
 
         Function2<LdbcQuery5Result, LdbcQuery5Result, LdbcQuery5Result> joinFun = new Function2<LdbcQuery5Result, LdbcQuery5Result, LdbcQuery5Result>()
         {

@@ -3,7 +3,7 @@ package com.ldbc.socialnet.workload.neo4j.transaction.embedded_cypher;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.neo4j.cypher.javacompat.ExecutionEngine;
+import org.neo4j.cypher.internal.javacompat.ExecutionEngine;
 import org.neo4j.graphdb.GraphDatabaseService;
 
 import com.ldbc.driver.DbException;

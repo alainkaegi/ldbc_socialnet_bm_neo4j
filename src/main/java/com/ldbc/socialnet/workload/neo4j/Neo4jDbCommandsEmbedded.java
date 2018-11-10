@@ -1,6 +1,8 @@
 package com.ldbc.socialnet.workload.neo4j;
 
-import org.neo4j.cypher.javacompat.ExecutionEngine;
+import java.io.File;
+
+import org.neo4j.cypher.internal.javacompat.ExecutionEngine;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 
@@ -30,8 +32,8 @@ public class Neo4jDbCommandsEmbedded extends Neo4jDbCommands
     @Override
     public void init()
     {
-        db = new GraphDatabaseFactory().newEmbeddedDatabaseBuilder( path ).setConfig( Config.NEO4J_RUN_CONFIG ).newGraphDatabase();
-        queryEngine = new ExecutionEngine( db );
+        db = new GraphDatabaseFactory().newEmbeddedDatabaseBuilder( new File( path ) ).setConfig( Config.NEO4J_RUN_CONFIG ).newGraphDatabase();
+        queryEngine = null;
         dbConnectionState = new Neo4jConnectionStateEmbedded( db, queryEngine );
         registerShutdownHook( db );
     }

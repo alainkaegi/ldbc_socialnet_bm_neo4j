@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
-import org.neo4j.kernel.impl.util.FileUtils;
+import org.neo4j.io.fs.FileUtils;
 import org.neo4j.unsafe.batchinsert.BatchInserter;
 import org.neo4j.unsafe.batchinsert.BatchInserters;
 
@@ -58,7 +58,7 @@ public class LdbcSocialNeworkNeo4jImporter
         FileUtils.deleteRecursively( new File( dbDir ) );
 
         logger.info( "Instantiating Neo4j BatchInserter" );
-        BatchInserter batchInserter = BatchInserters.inserter( dbDir, Config.NEO4J_IMPORT_CONFIG );
+        BatchInserter batchInserter = BatchInserters.inserter( new File( dbDir ), Config.NEO4J_IMPORT_CONFIG );
 
         /*
         * CSV Files
@@ -193,7 +193,7 @@ public class LdbcSocialNeworkNeo4jImporter
 
         batchInserter.shutdown();
 
-        GraphDatabaseService db = new GraphDatabaseFactory().newEmbeddedDatabase( dbDir );
+        GraphDatabaseService db = new GraphDatabaseFactory().newEmbeddedDatabase( new File( dbDir ) );
 
         GraphUtils.waitForIndexesToBeOnline( db, Domain.labelsToIndex() );
 

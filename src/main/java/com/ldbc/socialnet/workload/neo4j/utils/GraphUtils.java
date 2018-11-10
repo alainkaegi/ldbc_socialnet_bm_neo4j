@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 //import org.neo4j.cypher.CouldNotDropIndexException;
-import org.neo4j.cypher.javacompat.ExecutionEngine;
+import org.neo4j.cypher.internal.javacompat.ExecutionEngine;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
@@ -12,7 +12,7 @@ import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.schema.IndexDefinition;
 import org.neo4j.graphdb.schema.Schema.IndexState;
-import org.neo4j.tooling.GlobalGraphOperations;
+import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.unsafe.batchinsert.BatchInserter;
 
 import com.ldbc.driver.util.Pair;
@@ -47,7 +47,7 @@ public class GraphUtils
                     String property = labelPropertyPair._2();
                     try
                     {
-                        queryEngine.execute( "DROP INDEX ON :" + label + "(" + property + ")" );
+                        db.execute( "DROP INDEX ON :" + label + "(" + property + ")" );
                     }
                     catch ( Exception e )
                     // catch ( CouldNotDropIndexException e )
@@ -62,7 +62,7 @@ public class GraphUtils
             {
                 Label label = labelPropertyPair._1();
                 String property = labelPropertyPair._2();
-                queryEngine.execute( "CREATE INDEX ON :" + label + "(" + property + ")" );
+                db.execute( "CREATE INDEX ON :" + label + "(" + property + ")" );
             }
             db.schema().awaitIndexesOnline( msTimeout, TimeUnit.MILLISECONDS );
             tx.success();
@@ -115,12 +115,11 @@ public class GraphUtils
 
     public static long nodeCount( GraphDatabaseService db, long transactionSize )
     {
-        GlobalGraphOperations globalOperations = GlobalGraphOperations.at( db );
         long nodeCount = 0;
         Transaction tx = db.beginTx();
         try
         {
-            for ( Node node : globalOperations.getAllNodes() )
+            for ( Node node : db.getAllNodes() )
             {
                 nodeCount++;
                 if ( nodeCount % transactionSize == 0 )
@@ -140,12 +139,11 @@ public class GraphUtils
 
     public static long relationshipCount( GraphDatabaseService db, long transactionSize )
     {
-        GlobalGraphOperations globalOperations = GlobalGraphOperations.at( db );
         long relationshipCount = 0;
         Transaction tx = db.beginTx();
         try
         {
-            for ( Relationship relationship : globalOperations.getAllRelationships() )
+            for ( Relationship relationship : db.getAllRelationships() )
             {
                 relationshipCount++;
                 if ( relationshipCount % transactionSize == 0 )

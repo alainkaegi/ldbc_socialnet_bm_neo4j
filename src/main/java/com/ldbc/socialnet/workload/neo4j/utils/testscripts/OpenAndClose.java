@@ -1,5 +1,6 @@
 package com.ldbc.socialnet.workload.neo4j.utils.testscripts;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -30,7 +31,7 @@ public class OpenAndClose
     public void openAndClose() throws IOException
     {
         logger.info( "Starting Neo4j" );
-        GraphDatabaseService db = new GraphDatabaseFactory().newEmbeddedDatabase( dbDir );
+        GraphDatabaseService db = new GraphDatabaseFactory().newEmbeddedDatabase( new File( dbDir ) );
 
         logger.info( "Calculating Graph Metrics:" );
         logger.info( "\tNode count = " + GraphUtils.nodeCount( db, 10000000 ) );

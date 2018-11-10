@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.neo4j.cypher.javacompat.ExecutionEngine;
+import org.neo4j.cypher.internal.javacompat.ExecutionEngine;
 import org.neo4j.graphdb.GraphDatabaseService;
 
 import com.ldbc.socialnet.workload.Domain;
@@ -24,7 +24,7 @@ public class Neo4jQuery6EmbeddedCypher implements Neo4jQuery6
     public Iterator<LdbcQuery6Result> execute( GraphDatabaseService db, ExecutionEngine engine, LdbcQuery6 params )
     {
         return new ResultIterator(
-                engine.execute( query(), buildParams( params.personId(), params.tagName() ) ).iterator() );
+                db.execute( query(), buildParams( params.personId(), params.tagName() ) ) );
     }
 
     private Map<String, Object> buildParams( long personId, String tagName )

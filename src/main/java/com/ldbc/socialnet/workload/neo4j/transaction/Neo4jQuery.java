@@ -2,7 +2,7 @@ package com.ldbc.socialnet.workload.neo4j.transaction;
 
 import java.util.Iterator;
 
-import org.neo4j.cypher.javacompat.ExecutionEngine;
+import org.neo4j.cypher.internal.javacompat.ExecutionEngine;
 import org.neo4j.graphdb.GraphDatabaseService;
 
 import com.ldbc.driver.Operation;

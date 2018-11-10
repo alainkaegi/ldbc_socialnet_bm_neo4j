@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import org.neo4j.kernel.impl.util.FileUtils;
+import org.neo4j.io.fs.FileUtils;
 
 import com.ldbc.socialnet.workload.neo4j.load.tempindex.DirectMemoryMapDbTempIndexFactory;
 import com.ldbc.socialnet.workload.neo4j.load.tempindex.HashMapTempIndexFactory;
